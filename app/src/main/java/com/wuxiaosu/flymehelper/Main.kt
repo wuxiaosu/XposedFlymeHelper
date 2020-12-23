@@ -20,8 +20,8 @@ class Main : IXposedHookLoadPackage {
         const val TAG = "flymehelper"
     }
 
-    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam?) {
-        val packageName = lpparam!!.packageName
+    override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
+        val packageName = lpparam.packageName
 
         if (Constants.HOOK_PKGS.contains(packageName)) {
             val classLoader = lpparam.classLoader

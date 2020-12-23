@@ -16,31 +16,40 @@ class SettingsActivityHook {
         fun hook(classLoader: ClassLoader?) {
             val clz = XposedHelpers.findClass("com.android.settings.SettingsActivity", classLoader)
             XposedHelpers.findAndHookMethod(clz,
-                    "onResume", object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam?) {
-                    super.beforeHookedMethod(param)
+                "onResume", object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        super.beforeHookedMethod(param)
 
-                    val mDashboardFeatureProvider = XposedHelpers.getObjectField(param!!.thisObject, "mDashboardFeatureProvider")
+                        val mDashboardFeatureProvider = XposedHelpers.getObjectField(
+                            param.thisObject,
+                            "mDashboardFeatureProvider"
+                        )
 
-                    val list = XposedHelpers.callMethod(mDashboardFeatureProvider, "getAllCategories") as List<Object>
+                        val list = XposedHelpers.callMethod(
+                            mDashboardFeatureProvider,
+                            "getAllCategories"
+                        ) as List<Object>
 
-                    for (i in 0 until list.size) {
-                        val item = list.get(i)
+                        for (i in 0 until list.size) {
+                            val item = list.get(i)
 
-                        val mTiles = XposedHelpers.getObjectField(item, "mTiles") as ArrayList<Object>
-                        val newTiles = java.util.ArrayList<Object>()
+                            val mTiles =
+                                XposedHelpers.getObjectField(item, "mTiles") as ArrayList<Object>
+                            val newTiles = java.util.ArrayList<Object>()
 
-                        for (j in 0 until mTiles.size) {
-                            val title = mTiles.get(j)
-                            if (!removeList.contains(
-                                            XposedHelpers.getObjectField(title, "title"))) {
-                                newTiles.add(title)
+                            for (j in 0 until mTiles.size) {
+                                val title = mTiles.get(j)
+                                if (!removeList.contains(
+                                        XposedHelpers.getObjectField(title, "title")
+                                    )
+                                ) {
+                                    newTiles.add(title)
+                                }
                             }
+                            XposedHelpers.setObjectField(item, "mTiles", newTiles)
                         }
-                        XposedHelpers.setObjectField(item, "mTiles", newTiles)
                     }
-                }
-            })
+                })
         }
     }
 }
