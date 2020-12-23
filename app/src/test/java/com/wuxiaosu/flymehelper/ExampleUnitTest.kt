@@ -1,4 +1,4 @@
-package com.wuxiaosu.xposedflymehelper
+package com.wuxiaosu.flymehelper
 
 import org.junit.Test
 
