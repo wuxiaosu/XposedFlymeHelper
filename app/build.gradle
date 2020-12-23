@@ -30,6 +30,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    sourceSets {
+        debug {
+            java.srcDirs = ['src/main', "src/debug/java"]
+            assets.srcDirs = ['src/debug/assets']
+        }
+    }
 }
 
 dependencies {
