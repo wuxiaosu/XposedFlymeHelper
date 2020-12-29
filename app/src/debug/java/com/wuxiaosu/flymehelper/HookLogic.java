@@ -1,8 +1,5 @@
 package com.wuxiaosu.flymehelper;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
 import com.wuxiaosu.flymehelper.util.Constants;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -17,12 +14,12 @@ public class HookLogic implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
         if (Constants.HOOK_PKGS.contains(lpparam.packageName)) {
-            Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
+            /*Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
                     .showThreadInfo(false)
                     .methodCount(0)
                     .methodOffset(7)
                     .tag(Main.TAG)
-                    .build()));
+                    .build()));*/
 
             ClassLoader classLoader = lpparam.classLoader;
 
