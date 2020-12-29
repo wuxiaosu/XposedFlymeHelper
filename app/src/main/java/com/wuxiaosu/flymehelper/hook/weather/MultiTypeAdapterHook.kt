@@ -49,8 +49,14 @@ class MultiTypeAdapterHook {
 
                                 // 指数界面移除推荐
                                 if (!"com.meizu.flyme.weather.modules.warn.detail.bean.CategoryForNewsFlow"
-                                        .equals(data.javaClass.name) && !"com.meizu.flyme.weather.modules.index.bean.NewsFlowBean"
                                         .equals(data.javaClass.name)
+                                    && !"com.meizu.flyme.weather.modules.index.bean.NewsFlowBean".equals(
+                                        data.javaClass.name
+                                    )
+                                    // 预警界面推荐内容
+                                    && !"com.meizu.flyme.weather.modules.home.page.view.newsSdk.bean.NewsFlowBean".equals(
+                                        data.javaClass.name
+                                    )
                                 ) {
                                     newList.add(data)
                                 }
